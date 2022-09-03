@@ -1,0 +1,30 @@
+<template>
+  <lightning-card title="End Date Reminder">
+    <template if:true={project.data}>
+      <template if:true={showProjectEndDateReminder}>
+        <div class="slds-var-m-around_medium">
+          <p>{reminderMessage}</p>
+        </div>
+        <template if:true={showOneDayWarning}>
+          <div class="slds-var-m-around_medium slds-text-color_destructive">
+            <p>
+              Your project is ending in 1 day. Please follow the project close-out instructions.
+            </p>
+          </div>
+        </template>
+        <template if:true={showOneMonthWarning}>
+          <div class="slds-var-m-around_medium slds-text-color_destructive">
+            <p>
+              Your project is ending in 1 month. Please follow the project close-out instructions.
+            </p>
+          </div>
+        </template>
+      </template>
+      <template if:false={showProjectEndDateReminder}>
+        <div class="slds-var-m-around_medium">
+          <p>Your project has ended.</p>
+        </div>
+      </template>
+    </template>
+  </lightning-card>
+</template>
