@@ -1,0 +1,148 @@
+<template>
+  <lightning-card title="Start Date Field (Date)">
+    <template if:true={project.data}>
+      <div class="slds-grid">
+        <div class="slds-col slds-size_3-of-12 slds-var-m-around_medium">
+          <p class="slds-text-heading_small">Field Value vs. Field Display Value</p>
+          <br />
+          <p><b>Field Value:</b> {startDate}</p>
+          <p><b>Field Display Value:</b> {displayStartDate}</p>
+        </div>
+        <div class="slds-col slds-size_9-of-12 slds-var-m-vertical_medium slds-var-p-right_medium">
+          <p class="slds-text-heading_small">lightning-formatted-date-time Component</p>
+          <br />
+          <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-2">
+              <p><b>UTC</b></p>
+              <p>
+                <lightning-formatted-date-time
+                  month="numeric"
+                  year="numeric"
+                  day="numeric"
+                  value={startDate}
+                  time-zone="UTC"
+                >
+                </lightning-formatted-date-time>
+              </p>
+              <br />
+              <p><b>No Time Zone Specified (Defaults to Device Time Zone)</b></p>
+              <p>
+                <lightning-formatted-date-time
+                  month="numeric"
+                  year="numeric"
+                  day="numeric"
+                  value={startDate}
+                >
+                </lightning-formatted-date-time>
+              </p>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <p><b>Australia/Sydney: UTC+10</b></p>
+              <p>
+                <lightning-formatted-date-time
+                  month="numeric"
+                  year="numeric"
+                  day="numeric"
+                  value={startDate}
+                  time-zone="Australia/Sydney"
+                >
+                </lightning-formatted-date-time>
+              </p>
+              <br />
+              <p><b>America/Denver: UTC-6</b></p>
+              <p>
+                <lightning-formatted-date-time
+                  month="numeric"
+                  year="numeric"
+                  day="numeric"
+                  value={startDate}
+                  time-zone="America/Denver"
+                >
+                </lightning-formatted-date-time>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </lightning-card>
+  <lightning-card title="Created Date Field (Datetime)">
+    <template if:true={project.data}>
+      <div class="slds-grid">
+        <div class="slds-col slds-size_3-of-12 slds-var-m-around_medium">
+          <p class="slds-text-heading_small">Field Value vs. Field Display Value</p>
+          <br />
+          <p><b>Field Value:</b> {createdDate}</p>
+          <p><b>Field Display Value:</b> {displayCreatedDate}</p>
+        </div>
+        <div class="slds-col slds-size_9-of-12 slds-var-m-vertical_medium slds-var-p-right_medium">
+          <p class="slds-text-heading_small">lightning-formatted-date-time Component</p>
+          <br />
+          <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-2">
+              <p><b>UTC</b></p>
+              <p>
+                <lightning-formatted-date-time
+                  month="numeric"
+                  year="numeric"
+                  day="numeric"
+                  hour="2-digit"
+                  minute="2-digit"
+                  value={createdDate}
+                  time-zone="UTC"
+                  time-zone-name="short"
+                >
+                </lightning-formatted-date-time>
+              </p>
+              <br />
+              <p><b>No Time Zone Specified (Defaults to Device Time Zone)</b></p>
+              <p>
+                <lightning-formatted-date-time
+                  month="numeric"
+                  year="numeric"
+                  day="numeric"
+                  hour="2-digit"
+                  minute="2-digit"
+                  value={createdDate}
+                  time-zone-name="short"
+                >
+                </lightning-formatted-date-time>
+              </p>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <p><b>User Timezone: {salesforceUserTimezone}</b></p>
+              <p>
+                <lightning-formatted-date-time
+                  month="numeric"
+                  year="numeric"
+                  day="numeric"
+                  hour="2-digit"
+                  minute="2-digit"
+                  value={createdDate}
+                  time-zone={salesforceUserTimezone}
+                  time-zone-name="short"
+                >
+                </lightning-formatted-date-time>
+              </p>
+              <br />
+              <p><b>Device Timezone: {userDeviceTimezone}</b></p>
+              <p>
+                <lightning-formatted-date-time
+                  month="numeric"
+                  year="numeric"
+                  day="numeric"
+                  hour="2-digit"
+                  minute="2-digit"
+                  value={createdDate}
+                  time-zone={userDeviceTimezone}
+                  time-zone-name="short"
+                >
+                </lightning-formatted-date-time>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </lightning-card>
+</template>
