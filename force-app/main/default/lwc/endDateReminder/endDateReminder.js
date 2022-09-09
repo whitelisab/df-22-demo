@@ -6,88 +6,61 @@ import START_FIELD from '@salesforce/schema/Project__c.Start_Date__c';
 
 const fields = [END_FIELD, START_FIELD];
 
+// Constants for date math
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 const ONE_MONTH_IN_MS = 30 * ONE_DAY_IN_MS;
 
 export default class EndDateReminder extends LightningElement {
+  oneDayWarning;
+  oneMonthWarning;
+
   @api recordId;
 
   @wire(getRecord, { recordId: '$recordId', fields })
   project;
 
-  get endDate() {
-    return getFieldValue(this.project.data, END_FIELD);
-  }
+  get endDateReminderMessage() {
+    let reminderMessage;
 
-  get displayEndDate() {
-    return getFieldDisplayValue(this.project.data, END_FIELD);
-  }
+    if (this.project && this.project.data) {
+      // Determine whether project had ended using JS Date Object
+      const projEnd = new Date(getFieldValue(this.project.data, END_FIELD)).getTime();
+      const todayDate = new Date();
+      todayDate.setHours(0, 0, 0, 0);
+      const today = todayDate.getTime();
+      const showReminder = today < projEnd;
 
-  get startDate() {
-    return getFieldValue(this.project.data, START_FIELD);
-  }
+      // If project has not ended, construct the reminder message
+      if (showReminder) {
+        // Get days until end and whether we are within one month of end using JS Date Object
+        const difference = projEnd - today;
+        const daysUntilEnd = Math.ceil(difference / ONE_DAY_IN_MS);
+        const oneMonthFromEnd = projEnd - ONE_MONTH_IN_MS;
+        const projEndDisplay = getFieldDisplayValue(this.project.data, END_FIELD);
 
-  _getProjEndDateTimestamp() {
-    const projectEndDate = new Date(this.endDate);
-    return projectEndDate.getTime();
-  }
+        reminderMessage = `Your project is ending on ${projEndDisplay}. That's in ${daysUntilEnd} ${
+          daysUntilEnd === 1 ? 'day' : 'days'
+        }!`;
 
-  _getProjStartDateTimestamp() {
-    const projectStartDate = new Date(this.startDate);
-    return projectStartDate.getTime();
-  }
+        // Set warning messages if project is within one day or one month of ending
+        if (daysUntilEnd === 1) {
+          this.oneDayWarning = `Your project is ending in 1 day. Please follow the project close-out instructions.`;
+        }
 
-  _getTodayTimestamp() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return today.getTime();
-  }
-
-  _daysUntilProjectEnd() {
-    const projectEndTimestamp = this._getProjEndDateTimestamp();
-    const todayTimestamp = this._getTodayTimestamp();
-    const difference = projectEndTimestamp - todayTimestamp;
-
-    return Math.ceil(difference / ONE_DAY_IN_MS);
-  }
-
-  // If the project end date has not passed, show the reminder
-  get showProjectEndDateReminder() {
-    const projectEndTimestamp = this._getProjEndDateTimestamp();
-    const todayTimestamp = this._getTodayTimestamp();
-
-    return todayTimestamp < projectEndTimestamp;
-  }
-
-  // Generate the reminder message
-  get reminderMessage() {
-    const daysUntilEnd = this._daysUntilProjectEnd();
-    const message = `Your project is ending on ${this.displayEndDate}. That's in ${daysUntilEnd} ${
-      daysUntilEnd === 1 ? 'day' : 'days'
-    }!`;
-    return message;
-  }
-
-  // If project end day is within one day, show one day warning
-  get showOneDayWarning() {
-    const projectEndTimestamp = this._getProjEndDateTimestamp();
-    const todayTimestamp = this._getTodayTimestamp();
-    const oneDayFromEnd = projectEndTimestamp - ONE_DAY_IN_MS;
-
-    return todayTimestamp > oneDayFromEnd;
-  }
-
-  // If project end day is within one month, show one month warning
-  get showOneMonthWarning() {
-    let showWarning = false;
-    const projectEndTimestamp = this._getProjEndDateTimestamp();
-    const oneMonthFromEnd = projectEndTimestamp - ONE_MONTH_IN_MS;
-    const todayTimestamp = this._getTodayTimestamp();
-    // if end day is one day, show the one day warning instead of one month warning
-    if (todayTimestamp > oneMonthFromEnd && !this.showOneDayWarning) {
-      showWarning = true;
+        if (today > oneMonthFromEnd) {
+          this.oneMonthWarning = `Your project is ending in 1 month. Please follow the project close-out instructions.`;
+        }
+      } else {
+        reminderMessage = 'Your project has ended.';
+      }
     }
+    return reminderMessage;
+  }
 
-    return showWarning;
+  get warningMessage() {
+    let message = '';
+    if (this.oneMonthWarning) message = this.oneMonthWarning;
+    if (this.oneDayWarning) message = this.oneDayWarning;
+    return message;
   }
 }
