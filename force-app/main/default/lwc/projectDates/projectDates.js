@@ -44,24 +44,28 @@ export default class ProjectDates extends LightningElement {
   }
 
   /* 
-  Get the time zone set on the user device
+  Get the time zone and offset from the user device
   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/resolvedOptions
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset
   */
 
-  get userDeviceTimezone() {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  get deviceTimezone() {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const offset = new Date().getTimezoneOffset() / 60;
+    const offsetString = `UTC${offset > 0 ? '-' : '+'}${offset}`;
+    return `${tz} ${offsetString}`;
   }
 
   /*
-  Access internalization properties to get org time zone and locale settings
+  Access internalization properties to get the time zone and locale settings from the org and user config
   https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.create_i18n
   */
 
-  get orgTimezone() {
+  get sfTimezone() {
     return TIMEZONE;
   }
 
-  get orgLocale() {
+  get sfLocale() {
     return LOCALE;
   }
 }

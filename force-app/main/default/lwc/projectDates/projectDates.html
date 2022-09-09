@@ -6,11 +6,11 @@
         <br />
         <ul class="slds-list_dotted">
           <li>
-            The display value provides formatted and localized values based on the org's locale
-            settings
+            The display value provides formatted and localized values based on the Salesforce user
+            and org config
           </li>
-          <li>Org time zone: {orgTimezone}</li>
-          <li>Org locale: {orgLocale}</li>
+          <li>Salesforce time zone: {sfTimezone}</li>
+          <li>Salesforce locale: {sfLocale}</li>
         </ul>
         <br />
         <div class="slds-grid slds-var-m-bottom_medium">
@@ -31,10 +31,10 @@
         <br />
         <ul class="slds-list_dotted">
           <li>The field value is returned as an ISO 8601 formatted string</li>
-          <li>Default formatting is determined by locale set in the Salesforce user preferences</li>
+          <li>Default formatting is determined by locale set in Salesforce</li>
           <li>
             Default time zone is determined by the time zone set on the user device (currently set
-            to {userDeviceTimezone})
+            to {deviceTimezone} {deviceOffset})
           </li>
           <li>
             When using the component to display a date only, without time, include time-zone="UTC"
@@ -49,6 +49,34 @@
             <br />
             <p><b>Created Date Field Value</b></p>
             <p>{createdDate}</p>
+          </div>
+          <div class="slds-col slds-size_1-of-3">
+            <p><b>Created Date: No Time Zone Specified</b></p>
+            <p>
+              <lightning-formatted-date-time
+                month="numeric"
+                year="numeric"
+                day="numeric"
+                hour="2-digit"
+                minute="2-digit"
+                value={createdDate}
+              >
+              </lightning-formatted-date-time>
+            </p>
+            <br />
+            <p><b>Created Date: Salesforce Time Zone</b></p>
+            <p>
+              <lightning-formatted-date-time
+                month="numeric"
+                year="numeric"
+                day="numeric"
+                hour="2-digit"
+                minute="2-digit"
+                value={createdDate}
+                time-zone={sfTimezone}
+              >
+              </lightning-formatted-date-time>
+            </p>
           </div>
           <div class="slds-col slds-size_1-of-3">
             <p><b>Start Date: No Time Zone Specified</b></p>
@@ -70,35 +98,6 @@
                 day="numeric"
                 value={startDate}
                 time-zone="UTC"
-              >
-              </lightning-formatted-date-time>
-            </p>
-          </div>
-          <div class="slds-col slds-size_1-of-3">
-            <p><b>Created Date: No Time Zone Specified</b></p>
-            <p>
-              <lightning-formatted-date-time
-                month="numeric"
-                year="numeric"
-                day="numeric"
-                hour="2-digit"
-                minute="2-digit"
-                value={createdDate}
-                time-zone={userDeviceTimezone}
-              >
-              </lightning-formatted-date-time>
-            </p>
-            <br />
-            <p><b>Created Date: Org Timezone</b></p>
-            <p>
-              <lightning-formatted-date-time
-                month="numeric"
-                year="numeric"
-                day="numeric"
-                hour="2-digit"
-                minute="2-digit"
-                value={createdDate}
-                time-zone={orgTimezone}
               >
               </lightning-formatted-date-time>
             </p>
