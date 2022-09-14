@@ -34,17 +34,19 @@ export default class EndDateReminder extends LightningElement {
     let reminderMessage;
 
     if (this.dayjsInitialized && this.project && this.project.data) {
+      // Determine whether project had ended using Day.js
       const projEnd = window.dayjs.utc(getFieldValue(this.project.data, END_FIELD));
-      const today = window.dayjs().utc().startOf('day');
-      const showReminder = today < projEnd;
+      const today = window.dayjs().startOf('day');
+      const showReminder = today.isBefore(projEnd);
 
       // If project has not ended, construct the reminder message
       if (showReminder) {
-        const daysUntilEnd = projEnd.diff(today, 'day');
+        // Get days until end and whether we are within one month of end using Day.js
+        const daysUntilEnd = Math.ceil(projEnd.diff(today, 'day', true));
         const oneMonthFromEnd = projEnd.subtract(1, 'month');
-        const projEndDispaly = getFieldDisplayValue(this.project.data, END_FIELD);
+        const projEndDisplay = getFieldDisplayValue(this.project.data, END_FIELD);
 
-        reminderMessage = `Your project is ending on ${projEndDispaly}. That's in ${daysUntilEnd} ${
+        reminderMessage = `Your project is ending on ${projEndDisplay}. That's in ${daysUntilEnd} ${
           daysUntilEnd === 1 ? 'day' : 'days'
         }!`;
 
