@@ -7,7 +7,7 @@ This repo contains resources and demo code from my theater session at Dreamforce
 
 ## Table of contents
 
-- Session slide deck: Link to be added
+- [Session slide deck](https://drive.google.com/file/d/1G0ZKmFa_a7szI1gcP44qnUG-_EAqUGu6/view?usp=sharing)
 
 - [Date resources](RESOURCES.md): My collection of helpful resources for working with Dates and Datetimes in Salesforce and JavaScript.
 
