@@ -34,7 +34,7 @@
           <li>Default formatting is determined by locale set in Salesforce</li>
           <li>
             Default time zone is determined by the time zone set on the user device (currently set
-            to {deviceTimezone} {deviceOffset})
+            to {deviceTimezone})
           </li>
           <li>
             When using the component to display a date only, without time, include time-zone="UTC"
@@ -57,7 +57,7 @@
                 month="numeric"
                 year="numeric"
                 day="numeric"
-                hour="2-digit"
+                hour="numeric"
                 minute="2-digit"
                 value={createdDate}
               >
@@ -70,7 +70,7 @@
                 month="numeric"
                 year="numeric"
                 day="numeric"
-                hour="2-digit"
+                hour="numeric"
                 minute="2-digit"
                 value={createdDate}
                 time-zone={sfTimezone}
