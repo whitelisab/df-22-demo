@@ -9,7 +9,7 @@ import START_FIELD from '@salesforce/schema/Project__c.Start_Date__c';
 
 const fields = [END_FIELD, START_FIELD];
 
-export default class EndDateReminder extends LightningElement {
+export default class EndDateReminderWithLibrary extends LightningElement {
   dayjsInitialized = false;
   oneDayWarning;
   oneMonthWarning;

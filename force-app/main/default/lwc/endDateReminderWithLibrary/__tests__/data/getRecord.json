@@ -1,0 +1,14 @@
+{
+  "apiName": "Project__c",
+  "childRelationships": {},
+  "fields": {
+    "End_Date__c": {
+      "displayValue": "3/1/2020",
+      "value": "2020-03-01"
+    },
+    "Start_Date__c": {
+      "displayValue": "2/29/2020",
+      "value": "2020-02-29"
+    }
+  }
+}

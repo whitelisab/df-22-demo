@@ -2,10 +2,10 @@
   <lightning-card title="End Date Reminder With Library">
     <template if:true={project.data}>
       <div class="slds-var-m-around_medium">
-        <p>{endDateReminderMessage}</p>
+        <p class="reminder-message-container">{endDateReminderMessage}</p>
       </div>
       <div class="slds-var-m-around_medium slds-text-color_destructive">
-        <p>{warningMessage}</p>
+        <p class="warning-message-container">{warningMessage}</p>
       </div>
     </template>
   </lightning-card>
